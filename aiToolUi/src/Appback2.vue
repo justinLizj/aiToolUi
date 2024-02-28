@@ -7,6 +7,7 @@ router.push({
   path: '/'
 })
 
+
 const about2Click = () => {
   //获取到子组件的 title 数据
   console.log('你点击了li元素2');
