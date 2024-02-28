@@ -1,1 +1,14 @@
+1、下载项目
+git clone https://github.com/justinLizj/aiToolUi.git
 
+2、添加文件
+git add * 
+
+3、提交文件到缓存
+git commit  -m  "备注"
+
+4、将文件提交到github服务器
+git push -u origin main
+
+5、拉去最新代码
+git pull
