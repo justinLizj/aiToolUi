@@ -181,6 +181,7 @@ export default {
             data.urlImages.splice(index, 1);
           }
         })
+        normalViaible.value = !normalViaible.value;
       },
       changeModel : function(item){
         params.value.model = item.value
@@ -188,7 +189,7 @@ export default {
       replaceMaquillageToBackground(){
         // debugger;
         MessageApi.open({
-          type:'warning',
+          type:'success',
           duration: 3000,
           content: '开始执行绘画任务!'
         })
@@ -286,6 +287,7 @@ export default {
 <template>
   <div class="page-mj">
     <div class="inner">
+      <Card hover="boxShadow" style="width:350px;background-color: #D5D5D5FF">
       <div class="mj-box">
         <h2>创作中心</h2>
 
@@ -315,11 +317,11 @@ export default {
 
 
               <div class="param-line" style="padding-top: 10px">
-                <el-form-item label="生成数量" style="color:#000000">
+                <el-form-item label="生成数量" >
                   <template #default>
                     <div class="form-item-inner">
                       <el-slider v-model.number="params.count" :min="1" :max="5" :step="1"
-                                 style="width: 180px;--el-slider-main-bg-color:#47fff1"/>
+                                 style="width: 180px;--el-slider-main-bg-color:#4e6df8"/>
                       <el-tooltip effect="light"
                                   content="参数用法：--chaos 或--c，取值范围: 0-100 <br/> 取值越高结果越发散，反之则稳定收敛<br /> 默认值0最为精准稳定"
                                   raw-content placement="right">
@@ -333,11 +335,11 @@ export default {
               </div>
 
               <div class="param-line" style="padding-top: 10px">
-                <el-form-item label="图片倍率">
+                <el-form-item label="图片倍率" label-color="black">
                   <template #default>
                     <div class="form-item-inner">
                       <el-slider v-model.number="params.quality" :min="1" :max="3" :step="0.1"
-                                 style="width: 180px;--el-slider-main-bg-color:#47fff1"/>
+                                 style="width: 180px;--el-slider-main-bg-color:#4e6df8"/>
                       <el-tooltip effect="light"
                                   content="参数用法：--chaos 或--c，取值范围: 0-100 <br/> 取值越高结果越发散，反之则稳定收敛<br /> 默认值0最为精准稳定"
                                   raw-content placement="right">
@@ -356,13 +358,17 @@ export default {
         <div class="divider"></div>
         <div class="dividerKong"></div>
 
-        <el-button style="width:270px; color: #ffffff; font-weight: bold;" color="#0928F8FF" :dark="false" @click="funcs.replaceMaquillageToBackground()" round>立即生成</el-button>
+        <el-button style="width:270px; color: #ffffff; font-weight: bold;" color="#4e6df8" :dark="false" @click="funcs.replaceMaquillageToBackground()" round>立即生成</el-button>
       </div>
+
+      </Card>
+
       <div class="task-list-box">
         <div class="task-list-inner" >
           <h2>AI绘画</h2>
                 <div class="text">
                 </div>
+          <Card hover="boxShadow">
                 <div class="app" id="uploadId" style="height: 200px">
                     <div class="upload-wrapper" id="wrapperId">
                       <div class="item-wrapper landscape"
@@ -382,16 +388,21 @@ export default {
                           <div class="item"  ></div>
 
                           <div class="del" @click="funcs.deletePhoto(item.id)">
-                            <Icon iconName='x-circle' />
+                            <Icon iconName='x-circle' style="color:black"/>
                           </div>
                         </Card>
                       </div>
                     </div>
                 </div>
+          </Card>
+
+          <div class="text">
+          </div>
                 <div class="upload-btn"><input type="file" accept="image/*"  @change="funcs.uploadPhoto($event)">选 择 图 片</div>
 
 
           <h2>结果列表</h2>
+          <Card hover="boxShadow">
           <div v-loading="isLoading" element-loading-background="rgba(0, 0, 0, 0.3)">
             <div class="app" id="resultId" style="height: 200px">
               <div class="running-job-list" id="runId">
@@ -411,6 +422,7 @@ export default {
               </div>
             </div>
           </div>
+          </Card>
 
 
         </div>
@@ -462,7 +474,7 @@ export default {
       display: flex;
 
       .mj-box {
-        margin:10px
+        /*margin:10px*/
         background-color: #D5D5D5FF
         border:1px solid #D5D5D5FF
         min-width:300px
@@ -585,11 +597,11 @@ export default {
 
 
             .grid-content.active {
-              color: #47fff1
+              color: #4e6df8
               background-color: #585858
 
               .shape {
-                border: 1px solid #47fff1
+                border: 1px solid #4e6df8
               }
             }
 
@@ -628,8 +640,8 @@ export default {
               align-items: center
 
               .el-select {
-                --el-select-input-focus-border-color: #0928F8FF;
-                --el-input-focus-border-color: #0928F8FF;
+                --el-select-input-focus-border-color: #4e6df8;
+                --el-input-focus-border-color: #4e6df8;
               }
 
               .el-input__wrapper {
@@ -711,7 +723,7 @@ export default {
 
       .el-form {
         .el-form-item__label {
-          color: #ffffff
+          color: #000000
         }
 
         .el-input, .el-slider {
@@ -742,12 +754,12 @@ export default {
           }
 
           .title-tabs .el-tabs__item.is-active {
-            color: #0928F8FF;
+            color: #4e6df8;
             font-size: 18px;
           }
 
           .title-tabs .el-tabs__active-bar {
-            background-color: #0928F8FF;
+            background-color: #4e6df8;
           }
 
           .title-tabs .el-tabs__content {
@@ -755,7 +767,7 @@ export default {
           }
 
           .el-textarea {
-            --el-input-focus-border-color: #0928F8FF;
+            --el-input-focus-border-color: #4e6df8;
           }
 
           .el-textarea__inner {
@@ -841,7 +853,7 @@ export default {
           .upload-wrapper .item-wrapper .item{padding: 100% 50% 0% 0%;}
           .upload-wrapper .hover{opacity: 0.3;}
 
-          .upload-btn{overflow: hidden;background-color: #0928F8FF;position: relative; height: 30px;border-radius: 10px;  font-family: Arial, sans-serif; /* 修改字体 */
+          .upload-btn{overflow: hidden;background-color: #4e6df8;position: relative; height: 30px;border-radius: 10px;  font-family: Arial, sans-serif; /* 修改字体 */
             text-align: center; /* 居中文本 */
             display: flex; /* 使用Flexbox布局 */
             justify-content: center; /* 水平居中 */
@@ -1065,5 +1077,7 @@ export default {
       background-color: #666666;
     }
   }
-
+  .dx-card-warpper .dx-card-content {
+    padding: 0px;
+  }
 </style>

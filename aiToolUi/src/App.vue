@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import router from "./router";
-import { Tooltip,AnimationIcon } from 'vue3-dxui'
+import { Tooltip,AnimationIcon,Card } from 'vue3-dxui'
 router.push({
   path: '/ImageMj'
 })
@@ -29,13 +29,15 @@ const aboutClick = () => {
 
 import { ref, computed } from 'vue';
 const contentStyle = computed(() => ({
-  width: (window.innerWidth-90)+'px' // 使用 ref 的值计算样式
+  width: (window.innerWidth-98)+'px', // 使用 ref 的值计算样式
+  padding: '8px'
 }));
 
 </script>
 
 <template>
   <div class="home">
+    <Card hover="boxShadow" style="width:70px">
     <div class="navigator">
       <div class="logo1">
 
@@ -59,7 +61,9 @@ const contentStyle = computed(() => ({
         </li>
         </Tooltip>
       </ul>
+
     </div>
+    </Card>
     <div class="content" :style="contentStyle">
       <RouterView />
     </div>
