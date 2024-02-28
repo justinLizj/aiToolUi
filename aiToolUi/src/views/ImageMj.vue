@@ -315,7 +315,7 @@ export default {
 
 
               <div class="param-line" style="padding-top: 10px">
-                <el-form-item label="生成数量">
+                <el-form-item label="生成数量" style="color:#000000">
                   <template #default>
                     <div class="form-item-inner">
                       <el-slider v-model.number="params.count" :min="1" :max="5" :step="1"
@@ -356,7 +356,7 @@ export default {
         <div class="divider"></div>
         <div class="dividerKong"></div>
 
-        <el-button style="width:270px" color="#47fff1" :dark="false" @click="funcs.replaceMaquillageToBackground()" round>立即生成</el-button>
+        <el-button style="width:270px; color: #ffffff; font-weight: bold;" color="#0928F8FF" :dark="false" @click="funcs.replaceMaquillageToBackground()" round>立即生成</el-button>
       </div>
       <div class="task-list-box">
         <div class="task-list-inner" >
@@ -618,9 +618,9 @@ export default {
             }
 
             .model.active {
-              color:#47fff1;
-              background-color:#585858;
-              border:1px solid #47fff1;
+              color:#000000;
+              background-color: #D0D0D0FF;
+              border:1px solid #000000;
             }
 
             .form-item-inner {
@@ -628,8 +628,8 @@ export default {
               align-items: center
 
               .el-select {
-                --el-select-input-focus-border-color: #47FFF1;
-                --el-input-focus-border-color: #47FFF1;
+                --el-select-input-focus-border-color: #0928F8FF;
+                --el-input-focus-border-color: #0928F8FF;
               }
 
               .el-input__wrapper {
@@ -742,12 +742,12 @@ export default {
           }
 
           .title-tabs .el-tabs__item.is-active {
-            color: #47FFF1;
+            color: #0928F8FF;
             font-size: 18px;
           }
 
           .title-tabs .el-tabs__active-bar {
-            background-color: #47FFF1;
+            background-color: #0928F8FF;
           }
 
           .title-tabs .el-tabs__content {
@@ -755,7 +755,7 @@ export default {
           }
 
           .el-textarea {
-            --el-input-focus-border-color: #47FFF1;
+            --el-input-focus-border-color: #0928F8FF;
           }
 
           .el-textarea__inner {
@@ -841,7 +841,7 @@ export default {
           .upload-wrapper .item-wrapper .item{padding: 100% 50% 0% 0%;}
           .upload-wrapper .hover{opacity: 0.3;}
 
-          .upload-btn{overflow: hidden;background-color: #42b983;position: relative; height: 30px;border-radius: 10px;  font-family: Arial, sans-serif; /* 修改字体 */
+          .upload-btn{overflow: hidden;background-color: #0928F8FF;position: relative; height: 30px;border-radius: 10px;  font-family: Arial, sans-serif; /* 修改字体 */
             text-align: center; /* 居中文本 */
             display: flex; /* 使用Flexbox布局 */
             justify-content: center; /* 水平居中 */
@@ -972,7 +972,7 @@ export default {
 
           .animate {
             &:hover {
-              box-shadow: 0 0 10px rgba(71, 255, 241, 0.6); /* 添加阴影效果 */
+              box-shadow: 0 0 10px rgb(9, 40, 248); /* 添加阴影效果 */
               transform: translateY(-10px); /* 向上移动10像素 */
             }
           }
