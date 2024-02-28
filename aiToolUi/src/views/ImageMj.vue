@@ -456,36 +456,36 @@ export default {
   }
 
   .page-mj {
-    background-color: #282c34;
+    background-color: #F6F6F6FF;
 
     .inner {
       display: flex;
 
       .mj-box {
         margin:10px
-        background-color:#262626
-        border:1px solid #454545
+        background-color: #D5D5D5FF
+        border:1px solid #D5D5D5FF
         min-width:300px
         max-width:300px
         padding:10px
         border-radius:10px
-        color:#ffffff;
+        color:#000000;
         font-size:14px
 
         h2 {
           font-weight: bold;
           font-size: 20px
           text-align: center
-          color: #47fff1
+          color: #000000
         }
 
         .divider {
-          border-bottom: 1px solid #4A4A4A
+          border-bottom: 1px solid #FFFFFF
           width: 100%
           height: 10px
         }
         .dividerKong {
-          border-bottom: 0px solid #4A4A4A
+          border-bottom: 0px solid #FFFFFF
           width: 80%
           height: 10px
         }
@@ -725,10 +725,16 @@ export default {
         color: #ffffff
         overflow-x: hidden
 
+        h2 {
+           font-weight: bold;
+           font-size: 20px;
+           color: #000000;
+        }
         .task-list-inner {
           .el-tabs {
             --el-tabs-header-height: 55px;
           }
+
 
           .el-tabs__item {
             color: #fff;

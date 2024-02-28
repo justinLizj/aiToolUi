@@ -2,8 +2,9 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import router from "./router";
+import { Tooltip,AnimationIcon } from 'vue3-dxui'
 router.push({
-  path: '/'
+  path: '/ImageMj'
 })
 
 const about2Click = () => {
@@ -37,20 +38,26 @@ const contentStyle = computed(() => ({
   <div class="home">
     <div class="navigator">
       <div class="logo1">
-        <el-image src="/images/logo.png" :width="50" :height="50"/>
+
+        <AnimationIcon width="36px" height="36px" jsonDataName="GEAR" />
+<!--        <el-image src="/images/logo.png" :width="50" :height="50"/>-->
         <div class="divider"></div>
       </div>
       <ul class="nav-items">
+        <Tooltip title="AI化妆品" position="right">
         <li @click="aboutClick">
-          <a id="imageId">
+          <a id="imageId" class="active">
             <i class="iconfont icon-image-list"></i>
           </a>
         </li>
+        </Tooltip>
+        <Tooltip title="测试2" position="right">
         <li @click="about2Click">
           <a id="bookId">
             <i class="iconfont icon-book"></i>
           </a>
         </li>
+        </Tooltip>
       </ul>
     </div>
     <div class="content" :style="contentStyle">
@@ -64,16 +71,16 @@ const contentStyle = computed(() => ({
 @import '@/assets/iconfont/iconfont.css';
 .home {
   display: flex;
-  background-color: #25272D;
+  background-color: #ffffff;
   height 100vh
   width 100%
 
   .navigator {
-    display flex
-    flex-flow column
-    width 70px
-    padding 10px 6px
-    border-right: 1px solid #3c3c3c
+    display: flex
+    flex-flow: column
+    width: 70px
+    padding: 10px 6px
+    border-right: 1px solid #F6F6F6FF
 
     .logoTmp {
 
@@ -84,7 +91,7 @@ const contentStyle = computed(() => ({
       flex-flow column
       align-items center
       .divider {
-        border-bottom 1px solid #4A4A4A
+        border-bottom 1px solid #ffffff
         width 80%
         height 10px
       }
@@ -96,42 +103,42 @@ const contentStyle = computed(() => ({
       padding-right: 10px;
 
       li {
-        margin-bottom 15px
+        margin-bottom: 15px
 
         a {
-          color #DADBDC
-          background-color #40444A
-          border-radius 10px
-          width 48px
-          height 48px
-          display flex
-          justify-content center
-          align-items center
-          cursor pointer
+          color:#000000
+          background-color:#FFFFFF
+          border-radius: 10px
+          width: 48px
+          height: 48px
+          display: flex
+          justify-content: center
+          align-items: center
+          cursor: pointer
 
           .el-image {
-            border-radius 10px
+            border-radius:10px
           }
 
           .iconfont {
-            font-size 20px
+            font-size:20px
           }
         }
 
         a:hover, a.active {
-          color #47fff1
+          background-color: #eaeaea
         }
 
         .title {
-          font-size: 12px
-          padding-top: 5px
+          font-size: 12px;
+          padding-top: 5px;
           color: #e5e7eb;
           text-align: center;
         }
 
-        .active {
-          color #47fff1
-        }
+        /*.active {
+          color:#FFFFFFFF
+        }*/
       }
     }
   }
