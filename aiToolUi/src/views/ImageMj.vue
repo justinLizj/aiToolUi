@@ -323,7 +323,7 @@ export default {
                       <el-slider v-model.number="params.count" :min="1" :max="5" :step="1"
                                  style="width: 180px;--el-slider-main-bg-color:#4e6df8"/>
                       <el-tooltip effect="light"
-                                  content="参数用法：--chaos 或--c，取值范围: 0-100 <br/> 取值越高结果越发散，反之则稳定收敛<br /> 默认值0最为精准稳定"
+                                  content="参数用法："
                                   raw-content placement="right">
                         <el-icon>
                           <InfoFilled/>
