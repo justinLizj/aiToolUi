@@ -392,8 +392,13 @@ export default {
                           </div>
                         </Card>
                       </div>
+
+                      <div v-if="data.photos.length == 0" style="height: 100%;width: 100%;color:black;justify-content: center;align-items: center;justify-content: space-between;">
+                        +
+                      </div>
                     </div>
                 </div>
+
           </Card>
 
           <div class="text">
