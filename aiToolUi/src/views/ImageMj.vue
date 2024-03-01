@@ -281,20 +281,26 @@ export default {
 
       dragbox.addEventListener('dragover', function (e) {
         console.log('1111111');
+        dragbox.style.border="2px dashed blue";
+
+        // border: 2px dashed black;
         e.preventDefault(); // 必须阻止默认事件
       }, false);
       //拖放过程中鼠标经过的元素，被拖放的元素离开本元素范围
       dragbox.addEventListener('dragleave', function (e) {
         console.log('222222222');
+
+        dragbox.style.border="2px dashed black";
+        // border: 2px dashed black;
         e.preventDefault(); // 必须阻止默认事件
       }, false);
 
       //拖放的目标元素，其他元素被拖放到本元素中
       dragbox.addEventListener('drop', function (e) {
         e.preventDefault(); // 阻止默认事件
+        dragbox.style.border="2px dashed black";
         let files = e.dataTransfer.files; //获取文件
         console.log('333333');
-        console.log(files.length);
 
         for(let i = 0 ; i < files.length ; i++){
           let r = new FileReader();
@@ -316,8 +322,6 @@ export default {
               });
             }
         }
-
-
           //上传至服务器代码...
         }
         // 将拖拽的图片显示在页面
