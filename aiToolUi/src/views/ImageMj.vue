@@ -54,6 +54,9 @@ export default {
       ],
 
     })
+
+
+
     let funcs = reactive({
       drag: function(e) {
         e.target.classList.add("hover");
@@ -104,7 +107,11 @@ export default {
         // })
 
       },
+      uploadTmp: function(){
+        window.document.getElementById('inputFileId').click();
+      },
       uploadPhoto: function(event) {
+        debugger;
 
         let formData = new FormData()   //将文件转为FormData格式
         let file = event.target.files[0]
@@ -112,7 +119,7 @@ export default {
 
         let me = this;
 
-        /*let r = new FileReader();
+        let r = new FileReader();
         r.readAsDataURL(event.target.files[0]);
         r.onload = function(e) {
           let len = data.photos.length + 1;
@@ -132,7 +139,7 @@ export default {
             data.urlImages.push(response.data.file)
           }
           //上传至服务器代码...
-        }*/
+        }
 
 
         axios({
@@ -264,9 +271,59 @@ export default {
     onMounted(() => {
       window.document.getElementById("appId").style.height=(window.innerHeight-140) + "px";
       window.document.getElementById("uploadId").style.height=(window.innerHeight/2-70) + "px";
+      // window.document.getElementById("targetId").style.height=(window.innerHeight/2-80) + "px";
       window.document.getElementById("resultId").style.height=(window.innerHeight/2-70) + "px";
       window.document.getElementById("wrapperId").style.width=(window.innerWidth-450) + "px";
       window.document.getElementById("runId").style.width=(window.innerWidth-450) + "px";
+
+
+      const dragbox = window.document.getElementById('targetId');
+
+      dragbox.addEventListener('dragover', function (e) {
+        console.log('1111111');
+        e.preventDefault(); // 必须阻止默认事件
+      }, false);
+      //拖放过程中鼠标经过的元素，被拖放的元素离开本元素范围
+      dragbox.addEventListener('dragleave', function (e) {
+        console.log('222222222');
+        e.preventDefault(); // 必须阻止默认事件
+      }, false);
+
+      //拖放的目标元素，其他元素被拖放到本元素中
+      dragbox.addEventListener('drop', function (e) {
+        e.preventDefault(); // 阻止默认事件
+        let files = e.dataTransfer.files; //获取文件
+        console.log('333333');
+        console.log(files.length);
+
+        for(let i = 0 ; i < files.length ; i++){
+          let r = new FileReader();
+          r.readAsDataURL(files[i]);
+          r.onload = function(e) {
+            let len = data.photos.length + 1;
+            if(len > 5){
+              MessageApi.open({
+                type:'error',
+                duration: 3000,
+                content: '图片不能超过5个!'
+              })
+            } else {
+              data.photos.push({
+                id: len,
+                title: "",
+                path: this.result,
+                sort: len
+              });
+            }
+        }
+
+
+          //上传至服务器代码...
+        }
+        // 将拖拽的图片显示在页面
+        debugger;
+        // code
+      }, false);
     });
 
     return {
@@ -392,9 +449,10 @@ export default {
                           </div>
                         </Card>
                       </div>
-
-                      <div v-if="data.photos.length == 0" style="height: 100%;width: 100%;color:black;justify-content: center;align-items: center;justify-content: space-between;">
-                        +
+                      <div class="target" id="targetId" @click="funcs.uploadTmp" style="height:200px" v-if="data.photos.length < 5">
+<!--                        <Icon iconName='arrow-up-circle' width="50px" height="50px"/>-->
+                        <input type="file" id="inputFileId" accept="image/*" @change="funcs.uploadPhoto($event)" style="display:none" >
+                        请拖入或单击选择插入图片
                       </div>
                     </div>
                 </div>
@@ -1084,5 +1142,15 @@ export default {
   }
   .dx-card-warpper .dx-card-content {
     padding: 0px;
+  }
+
+
+  .target{
+    width: 19%;
+    border: 2px dashed black;
+    display: grid;
+    place-items: center;
+    color: #D5D5D5FF;
+    margin-top: 8px;
   }
 </style>
