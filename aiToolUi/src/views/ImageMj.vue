@@ -465,7 +465,7 @@ export default {
 
           <div class="text">
           </div>
-                <div class="upload-btn"><input type="file" accept="image/*"  @change="funcs.uploadPhoto($event)">选 择 图 片</div>
+<!--                <div class="upload-btn"><input type="file" accept="image/*"  @change="funcs.uploadPhoto($event)">选 择 图 片</div>-->
 
 
           <h2>结果列表</h2>
