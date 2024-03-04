@@ -118,7 +118,7 @@ export default {
 
         let me = this;
 
-        /*let r = new FileReader();
+        let r = new FileReader();
         r.readAsDataURL(event.target.files[0]);
         r.onload = function(e) {
           let len = data.photos.length + 1;
@@ -138,7 +138,7 @@ export default {
             data.urlImages.push(response.data.file)
           }
           //上传至服务器代码...
-        }*/
+        }
 
 
         axios({
@@ -270,11 +270,10 @@ export default {
     onMounted(() => {
       window.document.getElementById("appId").style.height=(window.innerHeight-140) + "px";
       window.document.getElementById("uploadId").style.height=(window.innerHeight/2-70) + "px";
-      window.document.getElementById("targetId").style.height=(window.innerHeight/2-200) + "px";
+      window.document.getElementById("targetId").style.height=(window.innerHeight/2-(window.innerHeight/6)) + "px";
       window.document.getElementById("resultId").style.height=(window.innerHeight/2-70) + "px";
       window.document.getElementById("wrapperId").style.width=(window.innerWidth-450) + "px";
       window.document.getElementById("runId").style.width=(window.innerWidth-450) + "px";
-
 
       const dragbox = window.document.getElementById('targetId');
 
