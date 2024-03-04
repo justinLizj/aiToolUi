@@ -270,7 +270,7 @@ export default {
     onMounted(() => {
       window.document.getElementById("appId").style.height=(window.innerHeight-140) + "px";
       window.document.getElementById("uploadId").style.height=(window.innerHeight/2-70) + "px";
-      window.document.getElementById("targetId").style.height=(window.innerHeight/2-(window.innerHeight/13.5)-50) + "px";
+      window.document.getElementById("targetId").style.height=(window.innerHeight/2-(window.innerHeight/7)-50) + "px";
       window.document.getElementById("resultId").style.height=(window.innerHeight/2-70) + "px";
       window.document.getElementById("wrapperId").style.width=(window.innerWidth-450) + "px";
       window.document.getElementById("runId").style.width=(window.innerWidth-450) + "px";
