@@ -39,6 +39,8 @@ export default {
       msg: "hell",
       urlImages: [
       ],
+      urlImageHead: [
+      ],
       photos: [
       //         {
       //   id: 1,
@@ -205,6 +207,16 @@ export default {
         })
         normalViaible.value = !normalViaible.value;
       },
+      deletePhotoHead: function(id) {
+        data.photoHead.splice(0, 1);
+        // data.photosHead.forEach(function(item, index, arr) {
+        //   if (item.id === id) {
+        //     data.photoHead.splice(index, 1);
+        //     data.urlImages.splice(index, 1);
+        //   }
+        // })
+        // normalViaible.value = !normalViaible.value;
+      },
       changeModel : function(item){
         params.value.model = item.value
       },
@@ -276,11 +288,13 @@ export default {
         imageUrl.value =data.urlImages[id-1];
         this.handleClickCloseButton();
       },
+      showImageHead(){
+        imageUrl.value =data.urlImageHead[0];
+      },
       showResultImage(id){
         imageUrl.value =data.resultPhotos[id-1].path;
         this.handleClickCloseButton();
       }
-
     })
 
     onMounted(() => {
@@ -381,6 +395,8 @@ export default {
                 path: this.result,
                 sort: len
               });
+            data.urlImageHead = [];
+            data.urlImageHead.push(this.result);
           }
           //上传至服务器代码...
         // 将拖拽的图片显示在页面
@@ -466,21 +482,28 @@ export default {
               <div style="padding-top: 20px"></div>
               <div class="param-line" >
                 <label>替换头像&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <div class="item-wrapper landscape" style="height:200px"
-                     v-for="item in data.photoHead"
-                     :id="item.id"
-                     :key="item.id"
-                     draggable="true"
-                     @click="funcs.showImage(item.id)"
-                     :style="'background-image: url('+item.path+')'"
-                >
-                  <Card hover='enlarge boxShadow' style="background-color:rgba(255,0,0,0);height:200px">
-                    <div class="item"  ></div>
 
-                    <div class="del" @click="funcs.deletePhoto(item.id)">
-                      <Icon iconName='x-circle' style="color:black"/>
-                    </div>
-                  </Card>
+                <div class="upload-wrapper" >
+                  <div class="item-wrapper landscape" style="height:200px;width:100%"
+                       v-for="item in data.photoHead"
+                       :id="item.id"
+                       :key="item.id"
+                       draggable="true"
+                       @dragstart.stop="funcs.drag($event)"
+                       @dragend="funcs.dragend($event)"
+                       @dragover="funcs.dragover(item.id,$event)"
+                       @dragleave="funcs.dragleave(item.id)"
+                       @drop="funcs.drop(item.id,$event)"
+                       @click="funcs.showImage(item.id)"
+                       :style="'background-image: url('+item.path+')'"
+                  >
+                    <Card style="background-color:rgba(255,0,0,0);height:200px;width:100%">
+                      <div class="item"  ></div>
+                      <div class="del" @click="funcs.deletePhotoHead(item.id)">
+                        <Icon iconName='x-circle' style="color:black"/>
+                      </div>
+                    </Card>
+                  </div>
                 </div>
                 <div class="target2" id="targetId2" @click="funcs.uploadTmp2" style="height:200px" v-if="data.photoHead.length < 1">
                   <input type="file" id="inputFileId2" accept="image/*" @change="funcs.uploadPhoto($event)" style="display:none" >
