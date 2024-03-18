@@ -4,13 +4,14 @@ import { ref } from 'vue';
 import {reactive} from 'vue'
 import {onMounted} from 'vue'
 import axios from 'axios'
-import { MessageApi,Card,Dialog,Icon  } from 'vue3-dxui'
+import { MessageApi,Card,Dialog,Icon,Switch  } from 'vue3-dxui'
 
 export default {
   components: {
     Card,
     Dialog,
-    Icon
+    Icon,
+    Switch
   },
   setup() {
     debugger;
@@ -21,12 +22,16 @@ export default {
     let normalViaible = ref(false);
     let buttonViaible = false;
     let imageUrl = ref(null);
+    let sexChecked = ref(true);
+    let backgroundChecked = ref(true);
 
     const params = ref({
       model: models[0].value,
       count:2,
       quality:2,
-      windowImage:""
+      windowImage:"",
+      sexChecked,
+      backgroundChecked
     })
 
 
@@ -52,12 +57,21 @@ export default {
       ],
       resultUrlImages: [
       ],
+      photoHead: [
+      ],
 
     })
 
 
-
     let funcs = reactive({
+      onSexChange: function() {
+        sexChecked.value = !sexChecked.value
+        console.log('checked:', sexChecked.value)
+      },
+      onBackgroundChange: function() {
+        backgroundChecked.value = !backgroundChecked.value
+        console.log('checked:', backgroundChecked.value)
+      },
       drag: function(e) {
         e.target.classList.add("hover");
         e.dataTransfer.setData("text/plain", e.target.id)
@@ -88,7 +102,6 @@ export default {
         data.photos.forEach(function(item) {
           if (item.id == targetId) {
             target = item;
-
           }
           if (item.id == sourceId) {
             source = item;
@@ -109,6 +122,9 @@ export default {
       },
       uploadTmp: function(){
         window.document.getElementById('inputFileId').click();
+      },
+      uploadTmp2: function(){
+        window.document.getElementById('inputFileId2').click();
       },
       uploadPhoto: function(event) {
 
@@ -326,6 +342,51 @@ export default {
         debugger;
         // code
       }, false);
+
+
+
+      const dragbox2 = window.document.getElementById('targetId2');
+
+      dragbox2.addEventListener('dragover', function (e) {
+        console.log('1111111');
+        dragbox2.style.border="2px dashed blue";
+
+        // border: 2px dashed black;
+        e.preventDefault(); // 必须阻止默认事件
+      }, false);
+      //拖放过程中鼠标经过的元素，被拖放的元素离开本元素范围
+      dragbox2.addEventListener('dragleave', function (e) {
+        console.log('222222222');
+
+        dragbox2.style.border="2px dashed black";
+        // border: 2px dashed black;
+        e.preventDefault(); // 必须阻止默认事件
+      }, false);
+
+      //拖放的目标元素，其他元素被拖放到本元素中
+      dragbox2.addEventListener('drop', function (e) {
+        e.preventDefault(); // 阻止默认事件
+        dragbox2.style.border="2px dashed black";
+        let files = e.dataTransfer.files; //获取文件
+        console.log('333333');
+
+          let len = data.photos.length + 1;
+          let r = new FileReader();
+          r.readAsDataURL(files[0]);
+          r.onload = function(e) {
+            data.photoHead = [];
+              data.photoHead.push({
+                id: len,
+                title: "",
+                path: this.result,
+                sort: len
+              });
+          }
+          //上传至服务器代码...
+        // 将拖拽的图片显示在页面
+        debugger;
+        // code
+      }, false);
     });
 
     return {
@@ -392,15 +453,49 @@ export default {
                   </template>
                 </el-form-item>
               </div>
+              <div class="param-line" >
+                <label>性别&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                      <Switch openText="女" closeText="男" v-model:defaultChecked="params.sexChecked" @change="funcs.onSexChange" ></Switch>
+              </div>
+              <div style="padding-top: 20px"></div>
+              <div class="param-line" >
+                <label>替换&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <Switch openText="替换背景" closeText="替换背景与人" v-model:defaultChecked="params.backgroundChecked" @change="funcs.onBackgroundChange" ></Switch>
+              </div>
 
-              <div class="param-line" style="padding-top: 10px">
+              <div style="padding-top: 20px"></div>
+              <div class="param-line" >
+                <label>替换头像&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div class="item-wrapper landscape" style="height:200px"
+                     v-for="item in data.photoHead"
+                     :id="item.id"
+                     :key="item.id"
+                     draggable="true"
+                     @click="funcs.showImage(item.id)"
+                     :style="'background-image: url('+item.path+')'"
+                >
+                  <Card hover='enlarge boxShadow' style="background-color:rgba(255,0,0,0);height:200px">
+                    <div class="item"  ></div>
+
+                    <div class="del" @click="funcs.deletePhoto(item.id)">
+                      <Icon iconName='x-circle' style="color:black"/>
+                    </div>
+                  </Card>
+                </div>
+                <div class="target2" id="targetId2" @click="funcs.uploadTmp2" style="height:200px" v-if="data.photoHead.length < 1">
+                  <input type="file" id="inputFileId2" accept="image/*" @change="funcs.uploadPhoto($event)" style="display:none" >
+                  请拖入或单击选择插入头像
+                </div>
+              </div>
+
+<!--              <div class="param-line" style="padding-top: 10px">
                 <el-form-item label="图片倍率" label-color="black">
                   <template #default>
                     <div class="form-item-inner">
                       <el-slider v-model.number="params.quality" :min="1" :max="3" :step="0.1"
-                                 style="width: 180px;--el-slider-main-bg-color:#4e6df8"/>
+                                 style="width: 180px;&#45;&#45;el-slider-main-bg-color:#4e6df8"/>
                       <el-tooltip effect="light"
-                                  content="参数用法：--chaos 或--c，取值范围: 0-100 <br/> 取值越高结果越发散，反之则稳定收敛<br /> 默认值0最为精准稳定"
+                                  content="参数用法：&#45;&#45;chaos 或&#45;&#45;c，取值范围: 0-100 <br/> 取值越高结果越发散，反之则稳定收敛<br /> 默认值0最为精准稳定"
                                   raw-content placement="right">
                         <el-icon>
                           <InfoFilled/>
@@ -409,7 +504,9 @@ export default {
                     </div>
                   </template>
                 </el-form-item>
-              </div>
+              </div>-->
+
+
 
             </el-form>
           </div>
@@ -1149,6 +1246,14 @@ export default {
 
   .target{
     width: 19%;
+    border: 2px dashed black;
+    display: grid;
+    place-items: center;
+    color: #D5D5D5FF;
+    margin-top: 8px;
+  }
+  .target2{
+    width: 100%;
     border: 2px dashed black;
     display: grid;
     place-items: center;
