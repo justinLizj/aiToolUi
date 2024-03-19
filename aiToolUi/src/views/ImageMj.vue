@@ -264,6 +264,8 @@ export default {
           }
         })
         normalViaible.value = !normalViaible.value;
+        let element = window.document.getElementById("targetId");
+        element.style.display = "block"; // 显示元素
       },
       deletePhotoHead: function(id) {
         debugger;
@@ -407,6 +409,10 @@ export default {
                 path: this.result,
                 sort: len
               });
+            }
+            if (len >= 5){
+              let element = window.document.getElementById("targetId");
+              element.style.display = "none"; // 显示元素
             }
         }
           //上传至服务器代码...
@@ -632,7 +638,7 @@ export default {
                           </div>
                         </Card>
                       </div>
-                      <div class="target" id="targetId" @click="funcs.uploadTmp" style="height:200px" v-if="data.photos.length < 5">
+                      <div class="target" id="targetId" @click="funcs.uploadTmp" style="height:200px">
 <!--                        <Icon iconName='arrow-up-circle' width="50px" height="50px"/>-->
                         <input type="file" id="inputFileId" accept="image/*" @change="funcs.uploadPhoto($event)" style="display:none" >
                         请拖入或单击选择插入图片
