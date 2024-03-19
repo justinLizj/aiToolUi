@@ -16,7 +16,8 @@ export default {
   setup() {
     debugger;
     const models = [
-      {text: "补水模式", value: " --v 6", img: "/images/mj/hzp_mx2.png"},
+      {text: "街道背景", value: "1", img: "/images/mj/hzp_mx2.png"},
+      {text: "沙滩背景", value: "2", img: "/images/mj/hzp_mx2.png"},
     ]
     let isLoading = ref(false);
     let normalViaible = ref(false);
@@ -198,6 +199,63 @@ export default {
           console.error(error); // 处理错误信息
         });
       },
+      uploadPhotoHead: function(event) {
+        let formData = new FormData()   //将文件转为FormData格式
+        let file = event.target.files[0]
+        formData.append('file', file)
+        let me = this;
+
+        let r = new FileReader();
+        r.readAsDataURL(event.target.files[0]);
+        r.onload = function(e) {
+          data.photoHead = [];
+          let len = data.photoHead.length + 1;
+            data.photoHead.push({
+              id: len,
+              title: "",
+              path: this.result,
+              sort: len
+            });
+            data.urlImageHead = [];
+            data.urlImageHead.push(response.data.file);
+          //上传至服务器代码...
+        }
+
+        let element = window.document.getElementById("targetId2");
+        element.style.display = "none"; // 显示元素
+        axios({
+          url: 'http://127.0.0.1:8000/api/comfyui/fileList', //后端提供的接口
+          method: 'post',
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(response => {
+          console.log(response.data.file); // 处理返回的数据
+
+          let r = new FileReader();
+          r.readAsDataURL(event.target.files[0]);
+          r.onload = function(e) {
+            data.photoHead = [];
+            let len = data.photoHead.length + 1;
+              data.photoHead.push({
+                id: len,
+                title: "",
+                path: this.result,
+                sort: len
+              });
+            data.urlImageHead = [];
+            data.urlImageHead.push(response.data.file)
+              // debugger;
+              // imageUrl.value = response.data.file;
+              // me.handleClickCloseButton();
+
+            //上传至服务器代码...
+          }
+        }).catch(error => {
+          console.error(error); // 处理错误信息
+        });
+      },
       deletePhoto: function(id) {
         data.photos.forEach(function(item, index, arr) {
           if (item.id === id) {
@@ -208,7 +266,11 @@ export default {
         normalViaible.value = !normalViaible.value;
       },
       deletePhotoHead: function(id) {
-        data.photoHead.splice(0, 1);
+        debugger;
+        data.photoHead = [];
+
+        let element = window.document.getElementById("targetId2");
+        element.style.display = "block"; // 显示元素
         // data.photosHead.forEach(function(item, index, arr) {
         //   if (item.id === id) {
         //     data.photoHead.splice(index, 1);
@@ -287,9 +349,6 @@ export default {
       showImage(id){
         imageUrl.value =data.urlImages[id-1];
         this.handleClickCloseButton();
-      },
-      showImageHead(){
-        imageUrl.value =data.urlImageHead[0];
       },
       showResultImage(id){
         imageUrl.value =data.resultPhotos[id-1].path;
@@ -397,6 +456,9 @@ export default {
               });
             data.urlImageHead = [];
             data.urlImageHead.push(this.result);
+
+            let element = window.document.getElementById("targetId2");
+            element.style.display = "none"; // 显示元素
           }
           //上传至服务器代码...
         // 将拖拽的图片显示在页面
@@ -442,7 +504,7 @@ export default {
               </div>
               <div class="param-line pt">
                 <el-row>
-                  <el-col :span="24" v-for="item in models" :key="item.value">
+                  <el-col :span="12" v-for="item in models" :key="item.value">
                       <div :class="item.value === params.model ? 'model active' : 'model'" @click="funcs.changeModel(item)">
                         <el-image :src="item.img" fit="cover" :width="100" :height="60"></el-image>
                         <div class="text">{{ item.text }}</div>
@@ -494,8 +556,7 @@ export default {
                        @dragover="funcs.dragover(item.id,$event)"
                        @dragleave="funcs.dragleave(item.id)"
                        @drop="funcs.drop(item.id,$event)"
-                       @click="funcs.showImage(item.id)"
-                       :style="'background-image: url('+item.path+')'"
+                       :style="'background-image: url('+item.path+');background-size: cover;background-position: center;'"
                   >
                     <Card style="background-color:rgba(255,0,0,0);height:200px;width:100%">
                       <div class="item"  ></div>
@@ -505,8 +566,8 @@ export default {
                     </Card>
                   </div>
                 </div>
-                <div class="target2" id="targetId2" @click="funcs.uploadTmp2" style="height:200px" v-if="data.photoHead.length < 1">
-                  <input type="file" id="inputFileId2" accept="image/*" @change="funcs.uploadPhoto($event)" style="display:none" >
+                <div class="target2" id="targetId2" @click="funcs.uploadTmp2" style="height:200px">
+                  <input type="file" id="inputFileId2" accept="image/*" @change="funcs.uploadPhotoHead($event)" style="display:none" >
                   请拖入或单击选择插入头像
                 </div>
               </div>
@@ -791,8 +852,8 @@ export default {
             }
 
             .model {
-              background-color:#383838;
-              border:1px solid #454545;
+              background-color:#D0D0D0FF;
+              border:1px solid #000000;
               border-radius:5px;
               padding:10px;
               margin-bottom:10px;
@@ -817,7 +878,7 @@ export default {
             .model.active {
               color:#000000;
               background-color: #D0D0D0FF;
-              border:1px solid #000000;
+              border:2px solid #0928f8;
             }
 
             .form-item-inner {
