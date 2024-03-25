@@ -37,6 +37,11 @@ const router = createRouter({
       path: '/ImageMj',
       name: 'ImageMj',
       component: () => import('../views/ImageMj.vue')
+    },
+    {
+      path: '/ImageQe',
+      name: 'ImageQe',
+      component: () => import('../views/ImageQe.vue')
     }
   ]
 })

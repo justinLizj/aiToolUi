@@ -13,7 +13,7 @@ const about2Click = () => {
   window.document.getElementById("imageId").className="";
   window.document.getElementById("bookId").className="active";
   router.push({
-    path: '/about2'
+    path: '/ImageQe'
   })
 };
 
